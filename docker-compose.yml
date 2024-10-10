@@ -1,0 +1,30 @@
+version: '3'
+services:
+  backend:
+    build: ./hr-portal-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=yourusername
+      - DATABASE_PASSWORD=yourpassword
+      - DATABASE_NAME=hr_portal
+    depends_on:
+      - db
+
+  frontend:
+    build: ./hr-portal-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: yourusername
+      POSTGRES_PASSWORD: yourpassword
+      POSTGRES_DB: hr_portal
+    ports:
+      - "5432:5432"
